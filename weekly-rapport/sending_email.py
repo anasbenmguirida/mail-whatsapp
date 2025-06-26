@@ -56,8 +56,6 @@ def send_mail_with_file():
     
     send_whatsapp_msg("le mail va être envoyer dans environ 1 minute ")
 
-    sleep(10)
-
     msg = construct_mail()
     
     source , destinataire , password = load_environment_variables()
