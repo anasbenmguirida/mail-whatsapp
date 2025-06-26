@@ -5,8 +5,10 @@ from email.mime.text import MIMEText
 import smtplib
 from email.message import EmailMessage
 import os , dotenv
+from time import sleep
 from sending_prompt import prompt_LLM
 import datetime
+from whatsapp_reminder import send_whatsapp_msg
 
 
 
@@ -20,6 +22,7 @@ def load_environment_variables():
 
 def construct_mail():
     source , destinataire , password = load_environment_variables()
+    
     contenue = prompt_LLM()
     
     msg = MIMEMultipart()
@@ -50,7 +53,13 @@ def construct_mail():
 
 
 def send_mail_with_file():
+    
+    send_whatsapp_msg("le mail va être envoyer dans environ 1 minute ")
+
+    sleep(10)
+
     msg = construct_mail()
+    
     source , destinataire , password = load_environment_variables()
 
     try:
@@ -60,5 +69,7 @@ def send_mail_with_file():
         return "Mail sent successfully!"
     except Exception as e:
         return f" Something went wrong: {e}"
+
+
 
 print(send_mail_with_file())
